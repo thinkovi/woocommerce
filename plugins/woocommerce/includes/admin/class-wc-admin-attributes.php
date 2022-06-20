@@ -351,8 +351,17 @@ class WC_Admin_Attributes {
 												<td class="attribute-terms">
 													<?php
 													$taxonomy = wc_attribute_taxonomy_name( $tax->attribute_name );
+		
+													/**
+													 * Filter the ability to display the terms list in WooCommerce Admin.
+													 *
+													 * @since 6.8.0
+													 *
+													 * @param bool $default_value The default returned value.
+													 */
+													$enable_terms_list_display = apply_filters( "woocommerce_admin_enable_terms_list_display" , true );
 
-													if ( taxonomy_exists( $taxonomy ) ) {
+													if ( taxonomy_exists( $taxonomy ) && $enable_terms_list_display ) {
 														$terms        = get_terms( $taxonomy, 'hide_empty=0' );
 														$terms_string = implode( ', ', wp_list_pluck( $terms, 'name' ) );
 														if ( $terms_string ) {
